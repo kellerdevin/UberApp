@@ -1,6 +1,8 @@
 import mysql.connector
 from riderOptions import riderOptions
 from driverOptions import driverOptions
+from updateDriverAttributes import updateDriverAttributes
+from getDriverAttributes import getDriverAttributes
 
 mydb = mysql.connector.connect(host="localhost",
 user="root",
@@ -51,41 +53,37 @@ for x in myresult:
 print("\n")
 ID_number = input("Enter your User ID number: ")
 
+#Prints Users 
 mycursor.execute("SELECT* FROM users WHERE userID = " + ID_number)
 myresult = mycursor.fetchall()
 for x in myresult:
     RiderType = x[1]
-    
-    
+
 if RiderType == "Rider":
     riderChoice = riderOptions.getRiderChoice()
     if riderChoice == "1":
         print("Finding Driver")
         #TODO 
         # Find Driver with Drive Mode On = True
+        # Enter To Address
+        # Enter From Address
     if riderChoice == "2":
         print("Rating Driver")
-            #If Choice = Rate my Driver
-                #Lookup last Driver ID
-                #Ask Rider for new Rating
-                #Then, calculate the driver’s new rating by taking their current rating + their new rating and dividing by 2.
+        #TODO
+        #Lookup last Driver ID
+        #Ask Rider for new Rating
+        #Then, calculate the driver’s new rating by taking their current rating + their new rating and dividing by 2.
 elif RiderType == "Driver":
-    driverChoice = driverOptions.getDriverChoice()
-    if driverChoice == "1":
-        print("Turning Drive Mode On")
-    if driverChoice == "2":
-        print("Exiting... ")
-    #TODO
-        #Ask them if they would like to turn Drive mode on
-            #If Choice = Find a Drive
-                #Find a Driver with Drive Mode On
-            #If Choice = Rate my Driver
-                #Lookup last Driver ID
-                #Ask Rider for new Rating
-                #Then, calculate the driver’s new rating by taking their current rating + their new rating and dividing by 2.
-                
-
-    
-
+    driverMode = getDriverAttributes.getDriverMode(ID_number,mycursor)
+    if driverMode == 0:
+        wantsToChangeMode = input("Your driver mode is currently off, would you like to turn it on? (y/n) ")
+        if wantsToChangeMode == "y":
+            modeVal = "true"
+            updateDriverAttributes.changeDriverMode(ID_number, mycursor,mydb, modeVal)
+    elif driverMode == 1:
+        wantsToChangeMode = input("Your driver mode is currently on, would you like to turn it off? (y/n) ")
+        if wantsToChangeMode == "y":
+            modeVal = "false"
+            updateDriverAttributes.changeDriverMode(ID_number, mycursor,mydb, modeVal)
     
 mydb.close()
