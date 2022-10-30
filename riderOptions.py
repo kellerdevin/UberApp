@@ -8,3 +8,12 @@ class riderOptions():
         RiderChoice = input("Input Choice: ")
         print("\n")
         return RiderChoice
+    
+    def findOpenDriver(mycursor):
+        print("Finding Open Driver")
+        mycursor.execute("SELECT userID FROM users WHERE DriverMode = false")
+        myresult = mycursor.fetchall()
+        for x in myresult:
+            OpenDriverID = x[0]
+        print(OpenDriverID)
+        return(OpenDriverID)

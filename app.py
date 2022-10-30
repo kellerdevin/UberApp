@@ -1,6 +1,5 @@
 import mysql.connector
 from riderOptions import riderOptions
-from driverOptions import driverOptions
 from updateDriverAttributes import updateDriverAttributes
 from getDriverAttributes import getDriverAttributes
 
@@ -32,7 +31,7 @@ mycursor = mydb.cursor()
 
 #Alter Table Comands
 
-#sql = "ALTER TABLE users ADD COLUMN DriverMode BOOLEAN, ADD COLUMN DriverRating FLOAT"
+#sql = "ALTER TABLE users ADD COLUMN FromAddress VARCHAR(30), ADD COLUMN ToAddress VARCHAR(30)"
 #mycursor.execute(sql)
 
 #mydb.commit()
@@ -62,7 +61,8 @@ for x in myresult:
 if RiderType == "Rider":
     riderChoice = riderOptions.getRiderChoice()
     if riderChoice == "1":
-        print("Finding Driver")
+        riderOptions.findOpenDriver(mycursor)
+        
         #TODO 
         # Find Driver with Drive Mode On = True
         # Enter To Address
