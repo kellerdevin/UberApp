@@ -61,11 +61,10 @@ for x in myresult:
 if RiderType == "Rider":
     riderChoice = riderOptions.getRiderChoice()
     if riderChoice == "1":
-        riderOptions.findOpenDriver(mycursor)
-        
-        #TODO 
-        # Find Driver with Drive Mode On = True
-        # Enter To Address
+        openDriver = riderOptions.findOpenDriver(mycursor)
+        FromAddress = input("Address to pick you up at: ")
+        ToAddress = input("Address to drop you off at: ")
+        print("Taking you from " + FromAddress + " to " + ToAddress)
         # Enter From Address
     if riderChoice == "2":
         print("Rating Driver")
